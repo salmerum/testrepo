@@ -1,0 +1,93 @@
+---
+title: "Week_4_HW_TGARZA"
+author: "Tony Garza"
+date: "June 8, 2016"
+output: 
+  html_document:
+    keep_md: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##HW4 Assignment
+
+Write bootstrap code to illustrate the central limit theorem (CLT) in R markdown and push the result to GitHub. Use a normal distribution with two different sample sizes and an exponential distribution with two different sample sizes. Correct code alone is insufficient. Please also comment on the code and explain the results. For help, see the lotsa.medians function in unit 2. The deliverable is a link to a GitHub repo containing the code.
+
+##Using Normal Distribution (Sample Size =1000)
+```{r}
+n <- 10 #sample size for rnorm
+R <- 1000 #bootstrap sample size
+bootmean <- numeric(R) #initialize bootmean
+tonysample <- rnorm(n) #create a normal distribution of size n
+tonymean <- mean(tonysample)
+for (i in 1:R) {
+  bootsample <- sample(tonysample,size=length(tonysample),replace=TRUE)
+  bootmean[i] <- mean(bootsample)
+}
+sd(bootmean)
+hist(bootmean)
+abline(v=tonymean,col="red")
+```
+<br/>
+Looks like a pretty normal distribution. Overlayed the original mean on the bootstrap mean histogram.
+<br/>
+
+## Using Normal Distribution (Sample Size =5000)
+```{r}
+n2 <- 10
+R2 <- 1000 #bootstrap sample size
+bootmean2 <- numeric(R2) #initialize bootmean
+tonysample2 <- rnorm(n2) #create a normal distribution of size n
+tonymean2 <- mean(tonysample2)
+for (i in 1:R) {
+  bootsample2 <- sample(tonysample2,size=length(tonysample2),replace=TRUE)
+  bootmean2[i] <- mean(bootsample2)
+}
+sd(bootmean2)
+hist(bootmean2)
+abline(v=tonymean2,col="red")
+```
+<br/>
+Same as before but with sample size increased to 5000. Overlayed the original mean on the bootstrap mean histogram.
+<br/>
+
+##Using An Exponential Distribution (Sample Size = 1000)
+```{r}
+n <- 10 #sample size for rnorm
+R <- 1000 #bootstrap sample size
+bootmean <- numeric(R) #initialize bootmean
+tonysample <- rexp(n) #create an exponential distribution of size n
+tonymean <- mean(tonysample)
+for (i in 1:R) {
+  bootsample <- sample(tonysample,size=length(tonysample),replace=TRUE)
+  bootmean[i] <- mean(bootsample)
+}
+sd(bootmean)
+hist(bootmean)
+abline(v=tonymean,col="red")
+```
+<br/>
+This time I'm using an exponential distribution. According to the CLM the type of distribution should not matter. Looks to be the case. Sample size here is 1000. Overlayed the original mean on the bootstrap mean histogram.
+<br/>
+
+## Using An Exponential Distribution (Sample Size = 5000)
+```{r}
+n2 <- 10 #sample size for rnorm
+R2 <- 5000 #bootstrap sample size
+bootmean2 <- numeric(R) #initialize bootmean
+tonysample2 <- rexp(n) #create an exponential distribution of size n
+tonymean2 <- mean(tonysample2)
+for (i in 1:R) {
+  bootsample2 <- sample(tonysample2,size=length(tonysample2),replace=TRUE)
+  bootmean2[i] <- mean(bootsample2)
+}
+sd(bootmean2)
+hist(bootmean2)
+abline(v=tonymean2,col="red")
+```
+<br/>
+Using an exponential distribution with a sample size of 5000. Overlayed the original mean on the bootstrap mean histogram.
+<br/>
+This example overall shows that the arithmetic mean of a large number of iterates will have aproximately a normal distribution no matter what the underlying distribution is. 
